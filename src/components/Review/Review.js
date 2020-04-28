@@ -1,8 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getDatabaseCart, removeFromDatabaseCart ,processOrder} from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
+import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../Cart/Cart';
 import happyImage from '../../images/giphy.gif'
@@ -11,15 +10,8 @@ import { useAuth } from '../Login/use-auth';
 
 const Review = () => {
     const [cart,setCart] = useState([]);
-    const [orderPlaced,SetOrderPlaced] = useState([]);
     const auth = useAuth();
 
-    const handlePlaceOrder =()=>{
-        setCart([]);
-        SetOrderPlaced(true);
-        processOrder();
-    }
-    
 
     const removeProduct = (productKey)=> {
         const newCart = cart.filter(pd => pd.key !== productKey);
@@ -31,19 +23,27 @@ const Review = () => {
         //cart
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(product => product.key === key);
+        fetch('http://localhost:4200/getProductByKey',{
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys) 
+          })
+        .then(res=> res.json())
+        .then(data=>{
+            const cartProducts = productKeys.map(key => {
+            const product = data.find(product => product.key === key);
             product.quantity = savedCart[key];
             return product;
         });
         setCart(cartProducts);
-        console.log(cartProducts);
+        
+        })
+        
     },[]);
 
     let thankyou;
-     if(orderPlaced){
-         thankyou = <img src={happyImage} alt=""/>
-     }
     return (
         <div className="shop-container">
             <div className="product-container">
@@ -65,7 +65,7 @@ const Review = () => {
             </div>
             <div className="cart-container">
                 <Cart cart={cart}>
-                    <Link to="Shipment"> 
+                    <Link to="/Shipment"> 
                    { auth.user ? 
                     <button className="main-button">Proceed Shipment</button> :
                     <button className="main-button">LogIn to Proceed</button>

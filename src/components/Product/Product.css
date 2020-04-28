@@ -5,10 +5,10 @@
     margin-right: 10px;
     padding-bottom: 5px;
 }
-.product .product-name{
-    color: blue;
+.product .product-name a{
+    color: #1aa9e0;
     font-weight: 400;
-
+    text-decoration: none;
 }
 .product img{
     padding-right: 15px;

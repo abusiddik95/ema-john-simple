@@ -8,19 +8,15 @@ import NotFound from './components/NotFound/NotFound';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Inventory from './components/Inventory/Inventory';
 import Login from './components/Login/Login';
-import { createContext } from 'react';
 import {AuthContextProvider, PrivateRoute} from './components/Login/use-auth'
 import Shipment from './components/Shipment/Shipment';
 
-export const UserContext = createContext();
-
 function App() {
-  const user = {name: 'koduMia', email: 'koduand modu@email.com'}
+
   return (
     <div>
       <AuthContextProvider>
@@ -34,8 +30,6 @@ function App() {
           <Route path="/review">
             <Review></Review>
           </Route>
-
-          
           <Route path="/inventory">
             <Inventory></Inventory>
           </Route>
@@ -51,12 +45,15 @@ function App() {
           <Route path="/Login">
             <Login></Login>
           </Route>
+
           <PrivateRoute path="/Shipment">
               <Shipment></Shipment>
           </PrivateRoute>
+
           <Route path="*">
            <NotFound></NotFound>
           </Route>
+          
         </Switch> 
       </Router>
       </AuthContextProvider>

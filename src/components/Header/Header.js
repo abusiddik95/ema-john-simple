@@ -2,7 +2,6 @@ import React from 'react';
 import logo from '../../images/logo.png';
 import './Header.css'
 import {useAuth} from '../Login/use-auth'
-import { Link, Router } from 'react-router-dom';
 
 
 const Header = () => {
@@ -13,7 +12,7 @@ const Header = () => {
             <nav>
                 <a href="/shop">shop</a>
                 <a href="/review">Order Review</a>
-                <a href="/inventory">Manage inventory</a>
+                <a href="/inventory">inventory</a>
                 { auth.user &&
                     <span style={{color:'yellow'}}>Welcome {auth.user.name}
                     </span>

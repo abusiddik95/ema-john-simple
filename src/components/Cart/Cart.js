@@ -1,7 +1,4 @@
-import React, { useContext } from 'react';
-import Product from '../Product/Product';
-import { useAuth } from '../Login/use-auth';
-
+import React from 'react';
 
 const Cart = (props) => {
     const cart = props.cart;
@@ -30,7 +27,7 @@ const Cart = (props) => {
     return (
         <div>
             <h4>Order Summery</h4>
-            <p>Items Odered: {cart.length}</p>
+            <p>Items Ordered: {cart.length}</p>
             <p>Product Price: {formatNumber(total)} </p>
             <p><small>Shipping Cost: {shipping}</small></p>
             <p><small>Tax + VAT: {tax}</small></p>
